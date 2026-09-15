@@ -1,0 +1,85 @@
+.auth-page {
+  min-height: 100vh;
+  background-color: #0d0d0f;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10vh;
+  font-family: system-ui, sans-serif;
+}
+.auth-box {
+  background-color: #16161a;
+  border: 1px solid #2a2a30;
+  border-radius: 8px;
+  padding: 32px;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 24px;
+}
+.auth-tabs {
+  display: flex;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #2a2a30;
+}
+.auth-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  color: #6b6375;
+  padding: 12px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.auth-tab.active {
+  color: #ff7a00;
+  border-bottom: 2px solid #ff7a00;
+}
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  text-align: left;
+}
+.input-group label {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+}
+.input-group input {
+  background-color: #08060d;
+  border: 1px solid #2a2a30;
+  color: #fff;
+  padding: 12px;
+  border-radius: 4px;
+  outline: none;
+}
+.input-group input:focus {
+  border-color: #ff7a00;
+}
+.btn-primary {
+  width: 100%;
+  background-color: #ff7a00;
+  color: #121214;
+  border: none;
+  padding: 14px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: opacity 0.2s;
+}
+.btn-primary:hover { opacity: 0.9; }
+.lgpd-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: #6b6375;
+  margin-bottom: 16px;
+  text-align: left;
+}
+.lgpd-box input { margin-top: 3px; accent-color: #ff7a00; }
+.link-rodape { margin-top: 20px; font-size: 14px; color: #6b6375; }
+.link-rodape a { color: #ff7a00; text-decoration: none; }
