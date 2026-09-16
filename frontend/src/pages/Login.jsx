@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { login } from '../services/api';
+import { login, buscarStatusOnboarding } from '../services/api';
 import Toast from '../components/Toast';
 import './Auth.css';
 
@@ -11,21 +11,68 @@ export default function Login() {
   const [toast, setToast] = useState({ msg: '', type: '' });
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    if (!termosAceitos) {
-      setToast({ msg: 'Você precisa aceitar os termos LGPD para entrar.', type: 'error' });
+ const handleLogin = async (e) => {
+  e.preventDefault();
+
+  if (!termosAceitos) {
+    setToast({
+      msg: 'Você precisa aceitar os termos LGPD para entrar.',
+      type: 'error'
+    });
+    return;
+  }
+
+  try {
+    const data =
+      await login({
+        email,
+        senha
+      });
+    localStorage.setItem(
+      'token',
+      data.token
+    );
+
+    setToast({
+      msg: 'Bem-vindo de volta!',
+      type: 'success'
+    });
+
+    /*
+     * Lojistas não passam pelo
+     * onboarding de jogador.
+     */
+    if (data.tipo !== 'USER') {
+      setTimeout(
+        () => navigate('/'),
+        700
+      );
       return;
     }
-    try {
-      const data = await login({ email, senha });
-      localStorage.setItem('token', data.token);
-      setToast({ msg: 'Bem-vindo de volta!', type: 'success' });
-      setTimeout(() => navigate('/'), 1500);
-    } catch (err) {
-      setToast({ msg: err.message, type: 'error' });
-    }
-  };
+    /*
+     * Para USER verificamos se ele
+     * já concluiu o onboarding.
+     */
+    const status =
+      await buscarStatusOnboarding();
+
+    setTimeout(() => {
+
+      if (status.concluido) {
+        navigate('/');
+      } else {
+        navigate('/onboarding');
+      }
+
+    }, 700);
+
+  } catch (err) {
+    setToast({
+      msg: err.message,
+      type: 'error'
+    });
+  }
+};
 
   return (
     <div className="auth-page">

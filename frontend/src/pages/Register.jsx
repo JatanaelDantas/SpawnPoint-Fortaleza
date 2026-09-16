@@ -16,20 +16,72 @@ export default function Register() {
   };
 
   const handleRegister = async (e) => {
-    e.preventDefault();
-    if (!formData.termosAceitos) {
-      setToast({ msg: 'Aceite os termos LGPD para continuar.', type: 'error' });
-      return;
-    }
-    try {
-      const data = await register({ ...formData, tipo });
-      localStorage.setItem('token', data.token);
-      setToast({ msg: 'Cadastro realizado com sucesso!', type: 'success' });
-      setTimeout(() => navigate('/'), 1500);
-    } catch (err) {
-      setToast({ msg: err.message, type: 'error' });
-    }
-  };
+
+  e.preventDefault();
+
+
+  if (!formData.termosAceitos) {
+
+    setToast({
+      msg: 'Aceite os termos LGPD para continuar.',
+      type: 'error'
+    });
+
+    return;
+  }
+
+
+  try {
+
+    const data =
+      await register({
+        ...formData,
+        tipo
+      });
+
+
+    localStorage.setItem(
+      'token',
+      data.token
+    );
+
+
+    setToast({
+      msg: 'Cadastro realizado com sucesso!',
+      type: 'success'
+    });
+
+
+    setTimeout(() => {
+
+      /*
+       * Jogador vai para onboarding.
+       *
+       * Lojista terá o fluxo próprio
+       * feito pelo outro membro.
+       */
+      if (data.tipo === 'USER') {
+
+        navigate('/onboarding');
+
+      } else {
+
+        navigate('/');
+
+      }
+
+    }, 800);
+
+
+  } catch (err) {
+
+    setToast({
+      msg: err.message,
+      type: 'error'
+    });
+
+  }
+};
 
   return (
     <div className="auth-page">
