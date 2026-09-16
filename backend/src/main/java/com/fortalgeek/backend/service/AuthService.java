@@ -53,21 +53,17 @@ public class AuthService {
         if (usuarioRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new IllegalArgumentException("E-mail já cadastrado.");
         }
-        
-        if (!request.isTermosAceitos()) {
-            throw new IllegalArgumentException("É necessário aceitar os termos da LGPD.");
-        }
 
         if ("COMPANY".equalsIgnoreCase(request.getTipo()) && empresaRepository.findByCnpj(request.getCnpj()).isPresent()) {
             throw new IllegalArgumentException("CNPJ já cadastrado.");
         }
 
-        // 1. Cria e salva o Usuário Base (Acesso/Login)
+        
         Usuario novoUsuario = new Usuario();
         novoUsuario.setEmail(request.getEmail());
         novoUsuario.setSenha(passwordEncoder.encode(request.getSenha()));
-        novoUsuario.setTermosAceitos(request.isTermosAceitos());
         novoUsuario.setNome(request.getNome());
+        
 
         if ("COMPANY".equalsIgnoreCase(request.getTipo())) {
             novoUsuario.setTipo(TipoUsuario.COMPANY);
@@ -77,12 +73,12 @@ public class AuthService {
 
         Usuario usuarioSalvo = usuarioRepository.save(novoUsuario);
 
-        // 2. Se for uma Conta Comercial, vincula os dados extras na tabela de Empresas
+        
         if (TipoUsuario.COMPANY.equals(usuarioSalvo.getTipo())) {
             Empresa novaEmpresa = new Empresa();
-            novaEmpresa.setNomeEmpresa(request.getNomeEmpresa());
+            novaEmpresa.setNomeFantasia(request.getNomeFantasia());
             novaEmpresa.setCnpj(request.getCnpj());
-            novaEmpresa.setCpfResponsavel(request.getCpf());
+            novaEmpresa.setTelefone(request.getTelefone());
             novaEmpresa.setUsuario(usuarioSalvo); 
             empresaRepository.save(novaEmpresa);
         }

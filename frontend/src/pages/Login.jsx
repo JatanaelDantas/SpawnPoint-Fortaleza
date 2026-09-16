@@ -7,16 +7,11 @@ import './Auth.css';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const [termosAceitos, setTermosAceitos] = useState(false);
   const [toast, setToast] = useState({ msg: '', type: '' });
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (!termosAceitos) {
-      setToast({ msg: 'Você precisa aceitar os termos LGPD para entrar.', type: 'error' });
-      return;
-    }
     try {
       const data = await login({ email, senha });
       localStorage.setItem('token', data.token);
@@ -45,10 +40,7 @@ export default function Login() {
             <label>SENHA</label>
             <input type="password" value={senha} onChange={e => setSenha(e.target.value)} required />
           </div>
-          <div className="lgpd-box">
-            <input type="checkbox" id="lgpd" checked={termosAceitos} onChange={e => setTermosAceitos(e.target.checked)} />
-            <label htmlFor="lgpd">Declaro que li e concordo com a Política de Privacidade e Termos de Uso (LGPD).</label>
-          </div>
+          
           <button type="submit" className="btn-primary">ENTRAR</button>
         </form>
       </div>

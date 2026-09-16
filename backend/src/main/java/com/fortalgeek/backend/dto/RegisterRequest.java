@@ -6,72 +6,28 @@ public class RegisterRequest {
     private String nome;
     private String email;
     private String senha;
-    private String nomeEmpresa;
+    private String nomeFantasia;
     private String cnpj;
-    private String cpf;
-    private boolean termosAceitos;
+    private String telefone;
 
-    public String getTipo() {
-        return tipo;
-    }
+    public String getTipo() { return tipo; }
+    public void setTipo(String tipo) { this.tipo = tipo; }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
 
-    public String getNome() {
-        return nome;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getNomeFantasia() { return nomeFantasia; }
+    public void setNomeFantasia(String nomeFantasia) { this.nomeFantasia = nomeFantasia; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public String getCnpj() { return cnpj; }
+    public void setCnpj(String cnpj) { this.cnpj = cnpj; }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public String getNomeEmpresa() {
-        return nomeEmpresa;
-    }
-
-    public void setNomeEmpresa(String nomeEmpresa) {
-        this.nomeEmpresa = nomeEmpresa;
-    }
-
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public boolean isTermosAceitos() {
-        return termosAceitos;
-    }
-
-    public void setTermosAceitos(boolean termosAceitos) {
-        this.termosAceitos = termosAceitos;
-    }
+    public String getTelefone() { return telefone; }
+    public void setTelefone(String telefone) { this.telefone = telefone; }
 }

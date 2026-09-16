@@ -9,7 +9,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        {/* Placeholder para o mapa no futuro */}
+       
         <Route path="/" element={<div style={{color:'white', padding:'50px'}}>Mapa em breve! <br/><a href="/login">Ir para Login</a></div>} />
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>

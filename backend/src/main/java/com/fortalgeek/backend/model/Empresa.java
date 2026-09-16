@@ -21,15 +21,14 @@ public class Empresa {
     private Long id;
 
     @Column(nullable = false)
-    private String nomeEmpresa;
+    private String nomeFantasia;
 
     @Column(nullable = false, unique = true)
     private String cnpj;
 
     @Column(nullable = false)
-    private String cpfResponsavel;
+    private String telefone;
 
-    // Relacionamento 1 para 1 com a tabela Usuario
     @OneToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
@@ -42,12 +41,12 @@ public class Empresa {
         this.id = id;
     }
 
-    public String getNomeEmpresa() {
-        return nomeEmpresa;
+    public String getNomeFantasia() {
+        return nomeFantasia;
     }
 
-    public void setNomeEmpresa(String nomeEmpresa) {
-        this.nomeEmpresa = nomeEmpresa;
+    public void setNomeFantasia(String nomeFantasia) {
+        this.nomeFantasia = nomeFantasia;
     }
 
     public String getCnpj() {
@@ -58,12 +57,12 @@ public class Empresa {
         this.cnpj = cnpj;
     }
 
-    public String getCpfResponsavel() {
-        return cpfResponsavel;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setCpfResponsavel(String cpfResponsavel) {
-        this.cpfResponsavel = cpfResponsavel;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public Usuario getUsuario() {
