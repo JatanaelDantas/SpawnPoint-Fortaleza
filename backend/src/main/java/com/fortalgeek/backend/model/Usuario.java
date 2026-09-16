@@ -30,16 +30,6 @@ public class Usuario {
     @Column(nullable = false)
     private TipoUsuario tipo;
 
-    // Campos exclusivos para Comercial (PJ)
-    @Column(name = "nome_empresa")
-    private String nomeEmpresa;
-
-    @Column(unique = true)
-    private String cnpj;
-
-    @Column(unique = true)
-    private String cpf; // CPF do dono
-
     // LGPD
     @Column(name = "termos_aceitos", nullable = false)
     private boolean termosAceitos = false;
@@ -83,30 +73,6 @@ public class Usuario {
 
     public void setTipo(TipoUsuario tipo) {
         this.tipo = tipo;
-    }
-
-    public String getNomeEmpresa() {
-        return nomeEmpresa;
-    }
-
-    public void setNomeEmpresa(String nomeEmpresa) {
-        this.nomeEmpresa = nomeEmpresa;
-    }
-
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public boolean isTermosAceitos() {
