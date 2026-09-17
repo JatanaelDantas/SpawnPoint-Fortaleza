@@ -6,82 +6,62 @@ import './Auth.css';
 
 export default function Register() {
   const [tipo, setTipo] = useState('USER');
-  const [formData, setFormData] = useState({ nome: '', email: '', senha: '', nomeEmpresa: '', cnpj: '', cpf: '', termosAceitos: false });
+  const [formData, setFormData] = useState({ 
+    nome: '', email: '', senha: '', confirmarSenha: '', 
+    nomeFantasia: '', cnpj: '', telefone: '' 
+  });
   const [toast, setToast] = useState({ msg: '', type: '' });
   const navigate = useNavigate();
 
   const handleTab = (novoTipo) => {
     setTipo(novoTipo);
-    setFormData({ ...formData, nomeEmpresa: '', cnpj: '', cpf: '' }); // Reseta campos
+    setFormData({ ...formData, nomeFantasia: '', cnpj: '', telefone: '', nome: '' }); 
   };
 
   const handleRegister = async (e) => {
+    e.preventDefault();
 
-  e.preventDefault();
+   
+    if (formData.senha !== formData.confirmarSenha) {
+      setToast({
+        msg: 'As senhas não coincidem!',
+        type: 'error'
+      });
+      return;
+    }
 
-
-  if (!formData.termosAceitos) {
-
-    setToast({
-      msg: 'Aceite os termos LGPD para continuar.',
-      type: 'error'
-    });
-
-    return;
-  }
-
-
-  try {
-
-    const data =
-      await register({
-        ...formData,
+    try {
+      
+      const { confirmarSenha, ...dadosParaEnvio } = formData;
+      
+      const data = await register({
+        ...dadosParaEnvio,
         tipo
       });
 
+      localStorage.setItem('token', data.token);
 
-    localStorage.setItem(
-      'token',
-      data.token
-    );
+      setToast({
+        msg: 'Cadastro realizado com sucesso!',
+        type: 'success'
+      });
 
+      setTimeout(() => {
+        
+        if (data.tipo === 'USER') {
+          navigate('/onboarding');
+        } else {
+          navigate('/');
+        }
+      }, 800);
 
-    setToast({
-      msg: 'Cadastro realizado com sucesso!',
-      type: 'success'
-    });
-
-
-    setTimeout(() => {
-
-      /*
-       * Jogador vai para onboarding.
-       *
-       * Lojista terá o fluxo próprio
-       * feito pelo outro membro.
-       */
-      if (data.tipo === 'USER') {
-
-        navigate('/onboarding');
-
-      } else {
-
-        navigate('/');
-
-      }
-
-    }, 800);
-
-
-  } catch (err) {
-
-    setToast({
-      msg: err.message,
-      type: 'error'
-    });
-
-  }
-};
+    } catch (err) {
+      setToast({
+        msg: err.message,
+        type: 'error'
+      });
+    }
+  };
 
   return (
     <div className="auth-page">
@@ -93,40 +73,37 @@ export default function Register() {
           <button className="auth-tab active">CADASTRO</button>
         </div>
         
-        {/* Toggle Player / Comercial */}
         <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
           <button type="button" onClick={() => handleTab('USER')} className={`btn-primary ${tipo === 'COMPANY' ? 'outline' : ''}`} style={{ background: tipo === 'USER' ? '#aa3bff' : 'transparent', border: '1px solid #aa3bff', color: '#fff' }}>PLAYER</button>
           <button type="button" onClick={() => handleTab('COMPANY')} className={`btn-primary ${tipo === 'USER' ? 'outline' : ''}`} style={{ background: tipo === 'COMPANY' ? '#ff7a00' : 'transparent', border: '1px solid #ff7a00', color: '#fff' }}>COMERCIAL</button>
         </div>
 
         <form onSubmit={handleRegister}>
-          {tipo === 'COMPANY' && (
+          
+          {tipo === 'COMPANY' ? (
             <>
               <div className="input-group">
-                <label>NOME DA EMPRESA</label>
-                <input type="text" value={formData.nomeEmpresa} onChange={e => setFormData({...formData, nomeEmpresa: e.target.value})} required />
+                <label>NOME FANTASIA</label>
+                <input type="text" value={formData.nomeFantasia} onChange={e => setFormData({...formData, nomeFantasia: e.target.value})} required />
               </div>
               <div className="input-group">
                 <label>CNPJ</label>
                 <input type="text" value={formData.cnpj} onChange={e => setFormData({...formData, cnpj: e.target.value})} required />
               </div>
+              <div className="input-group">
+                <label>TELEFONE</label>
+                <input type="text" value={formData.telefone} onChange={e => setFormData({...formData, telefone: e.target.value})} required />
+              </div>
             </>
+          ) : (
+            <div className="input-group">
+              <label>SEU NOME / NICK</label>
+              <input type="text" value={formData.nome} onChange={e => setFormData({...formData, nome: e.target.value})} required />
+            </div>
           )}
 
           <div className="input-group">
-            <label>{tipo === 'COMPANY' ? 'NOME DO RESPONSÁVEL' : 'SEU NOME / NICK'}</label>
-            <input type="text" value={formData.nome} onChange={e => setFormData({...formData, nome: e.target.value})} required />
-          </div>
-
-          {tipo === 'COMPANY' && (
-             <div className="input-group">
-             <label>CPF DO RESPONSÁVEL</label>
-             <input type="text" value={formData.cpf} onChange={e => setFormData({...formData, cpf: e.target.value})} required />
-           </div>
-          )}
-
-          <div className="input-group">
-            <label>{tipo === 'COMPANY' ? 'E-MAIL CORPORATIVO OU DO DONO' : 'E-MAIL'}</label>
+            <label>{tipo === 'COMPANY' ? 'E-MAIL DA EMPRESA' : 'E-MAIL'}</label>
             <input type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} required />
           </div>
           
@@ -135,9 +112,9 @@ export default function Register() {
             <input type="password" value={formData.senha} onChange={e => setFormData({...formData, senha: e.target.value})} required />
           </div>
 
-          <div className="lgpd-box">
-            <input type="checkbox" id="lgpd-reg" checked={formData.termosAceitos} onChange={e => setFormData({...formData, termosAceitos: e.target.checked})} />
-            <label htmlFor="lgpd-reg">Concordo com o tratamento dos meus dados conforme as diretrizes da LGPD (Lei 13.709/2018).</label>
+          <div className="input-group">
+            <label>CONFIRMAR SENHA</label>
+            <input type="password" value={formData.confirmarSenha} onChange={e => setFormData({...formData, confirmarSenha: e.target.value})} required />
           </div>
 
           <button type="submit" className="btn-primary">CRIAR CONTA</button>

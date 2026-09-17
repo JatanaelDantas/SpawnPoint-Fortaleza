@@ -30,11 +30,11 @@ public class Usuario {
     @Column(nullable = false)
     private TipoUsuario tipo;
 
-    // LGPD
+    
     @Column(name = "termos_aceitos", nullable = false)
     private boolean termosAceitos = false;
 
-    // Getters e Setters
+    
     public Long getId() {
         return id;
     }

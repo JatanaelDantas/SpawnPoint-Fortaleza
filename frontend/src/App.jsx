@@ -35,8 +35,6 @@ function App() {
           element={<Onboarding />}
         />
 
-
-        {/* Mapa será implementado pela equipe */}
         <Route
           path="/"
           element={
