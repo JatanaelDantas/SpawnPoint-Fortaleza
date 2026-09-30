@@ -1,15 +1,21 @@
 package com.fortalgeek.backend.dto;
 
+public class RegisterRequest {
 
-//O QUE EU MANDO E QUERO RECEBER DE CADASTRO DE EMPRESA
-public class CadastroEmpresaRequest {
+    private String tipo;
+    private String nome;
     private String email;
     private String senha;
     private String nomeFantasia;
     private String cnpj;
     private String telefone;
 
-    
+    public String getTipo() { return tipo; }
+    public void setTipo(String tipo) { this.tipo = tipo; }
+
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
+
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 

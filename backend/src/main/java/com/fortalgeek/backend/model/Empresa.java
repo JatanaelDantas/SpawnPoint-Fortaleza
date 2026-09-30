@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "empresas")
 public class Empresa {
-//O QUE VAI SER COLOCADO NA TABELA EMPRESA, E O QUE VAI SER RECEBIDO DO DTO DE CADASTRO DE EMPRESA
+
     public Empresa() {
     }
 
@@ -26,18 +26,19 @@ public class Empresa {
     @Column(nullable = false, unique = true)
     private String cnpj;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String telefone;
 
-    // Relacionamento 1 para 1 com a tabela Usuario
     @OneToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNomeFantasia() {
