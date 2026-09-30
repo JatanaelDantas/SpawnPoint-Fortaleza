@@ -19,7 +19,8 @@ public class EventoService {
 
     @Autowired
     private EmpresaRepository empresaRepository;
-
+    
+    // aqui é o método de criação do evento
     public Evento criarEvento(EventoRequest request) {
 
         Empresa empresaEncontrada = empresaRepository.findById(request.getEmpresaId())
@@ -37,6 +38,27 @@ public class EventoService {
 
     }
 
+    // aqui é o método de atualização do evento
+    public Evento atualizarEvento(Long id, EventoRequest request) {
+        Evento eventoExistente = eventoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Evento não encontrado!"));
+
+        eventoExistente.setTitulo(request.getTitulo());
+        eventoExistente.setDescricao(request.getDescricao());
+        eventoExistente.setLocal(request.getLocal());
+        eventoExistente.setDataHora(request.getDataHora());
+
+        return eventoRepository.save(eventoExistente);
+    }
+
+    // aqui é o método de deleção do evento
+    public void deletarEvento(Long id) {
+        Evento eventoExistente = eventoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Evento não encontrado!"));
+
+        eventoRepository.delete(eventoExistente);
+    }
+    // aqui é o método de listagem de todos os eventos
     public List<Evento> listarTodos() {
         return eventoRepository.findAll();
     }
