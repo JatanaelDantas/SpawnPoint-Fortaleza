@@ -53,10 +53,12 @@ export default function Onboarding() {
 
       try {
         const status = await buscarStatusOnboarding();
-        if (status.concluido) {
+        
+        if (status.concluido && tipoUsuario === 'USER') {
           navigate('/mapa', { replace: true });
           return;
         }
+        
         if (status.nickname) setNickname(status.nickname);
         if (status.interesses) setInteresses(status.interesses);
       } catch (error) {
@@ -67,7 +69,7 @@ export default function Onboarding() {
     };
 
     carregarOnboarding();
-  }, [navigate]);
+  }, [navigate, tipoUsuario]);
 
   const avancarNickname = () => {
     setErro('');
