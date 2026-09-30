@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { login } from '../services/api';
+import { login, buscarStatusOnboarding } from '../services/api';
 import Toast from '../components/Toast';
 import './Auth.css';
 
@@ -12,11 +12,29 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     try {
       const data = await login({ email, senha });
+      
       localStorage.setItem('token', data.token);
+
       setToast({ msg: 'Bem-vindo de volta!', type: 'success' });
-      setTimeout(() => navigate('/'), 1500);
+
+      if (data.tipo !== 'USER') {
+        setTimeout(() => navigate('/'), 700);
+        return;
+      }
+      
+      const status = await buscarStatusOnboarding();
+
+      setTimeout(() => {
+        if (status.concluido) {
+          navigate('/');
+        } else {
+          navigate('/onboarding');
+        }
+      }, 700);
+
     } catch (err) {
       setToast({ msg: err.message, type: 'error' });
     }

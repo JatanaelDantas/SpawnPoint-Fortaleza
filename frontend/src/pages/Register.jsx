@@ -20,22 +20,46 @@ export default function Register() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    
+
+   
     if (formData.senha !== formData.confirmarSenha) {
-      setToast({ msg: 'As senhas não coincidem!', type: 'error' });
+      setToast({
+        msg: 'As senhas não coincidem!',
+        type: 'error'
+      });
       return;
     }
 
     try {
+      
       const { confirmarSenha, ...dadosParaEnvio } = formData;
       
-      const data = await register({ ...dadosParaEnvio, tipo, termosAceitos: true });
-      
+      const data = await register({
+        ...dadosParaEnvio,
+        tipo
+      });
+
       localStorage.setItem('token', data.token);
-      setToast({ msg: 'Cadastro realizado com sucesso!', type: 'success' });
-      setTimeout(() => navigate('/'), 1500);
+
+      setToast({
+        msg: 'Cadastro realizado com sucesso!',
+        type: 'success'
+      });
+
+      setTimeout(() => {
+        
+        if (data.tipo === 'USER') {
+          navigate('/onboarding');
+        } else {
+          navigate('/');
+        }
+      }, 800);
+
     } catch (err) {
-      setToast({ msg: err.message, type: 'error' });
+      setToast({
+        msg: err.message,
+        type: 'error'
+      });
     }
   };
 

@@ -8,6 +8,6 @@ import com.fortalgeek.backend.model.Empresa;
 
 public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
     
-
+    
     Optional<Empresa> findByCnpj(String cnpj);
 }
