@@ -40,6 +40,9 @@ export default function Register() {
       });
 
       localStorage.setItem('token', data.token);
+      
+      //ADC pra onboarding saber quem é 
+      localStorage.setItem('tipoUsuario', tipo);
 
       setToast({
         msg: 'Cadastro realizado com sucesso!',
@@ -47,12 +50,8 @@ export default function Register() {
       });
 
       setTimeout(() => {
-        
-        if (data.tipo === 'USER') {
-          navigate('/onboarding');
-        } else {
-          navigate('/');
-        }
+        //modifiquei aqui pra tanto empresa e usuario ir pra onboarding
+        navigate('/onboarding');
       }, 800);
 
     } catch (err) {
