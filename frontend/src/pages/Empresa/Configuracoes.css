@@ -1,0 +1,35 @@
+.configuracoes-container h1 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 32px;
+}
+
+.config-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.config-option input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #f97316;
+  cursor: pointer;
+}
+
+.config-option label {
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-salvar-pref {
+  background-color: #f97316;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
