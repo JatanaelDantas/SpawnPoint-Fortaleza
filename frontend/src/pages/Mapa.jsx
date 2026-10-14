@@ -1,31 +1,17 @@
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { useNavigate } from 'react-router-dom';
-import L from 'leaflet';
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-
-let DefaultIcon = L.icon({
-    iconUrl: icon,
-    shadowUrl: iconShadow,
-    iconSize: [25, 41],
-    iconAnchor: [12, 41]
-});
-L.Marker.prototype.options.icon = DefaultIcon;
+import 'leaflet/dist/leaflet.css';
+import './Mapa.css';
+import { createSpawnPin, PIN_ICONS } from '../components/SpawnPin';
 
 export default function Mapa() {
   const navigate = useNavigate();
   const [logado, setLogado] = useState(false);
 
-  // Coordenadas centrais de Fortaleza
-  const position = [-3.7327, -38.5270];
-
   useEffect(() => {
-    // Verifica se o usuário tem token para mudar os botões
     const token = localStorage.getItem('token');
-    if (token) {
-      setLogado(true);
-    }
+    if (token) setLogado(true);
   }, []);
 
   const handleLogout = () => {
@@ -35,70 +21,98 @@ export default function Mapa() {
   };
 
   return (
-    <div style={{ position: 'relative', height: '100vh', width: '100vw' }}>
+    <div className="mapa-wrapper">
       
-      <div style={{ 
-        position: 'absolute', 
-        top: '20px', 
-        right: '20px', 
-        zIndex: 1000, 
-        display: 'flex', 
-        gap: '10px' 
-      }}>
-        {!logado ? (
-          <>
-            <button 
-              onClick={() => navigate('/login')} 
-              className="btn-primary" 
-              style={{ padding: '8px 16px', background: 'rgba(0,0,0,0.7)', border: '1px solid #aa3bff' }}>
-              LOGIN
-            </button>
-            <button 
-              onClick={() => navigate('/register')} 
-              className="btn-primary" 
-              style={{ padding: '8px 16px', background: '#aa3bff', border: 'none' }}>
-              CADASTRO
-            </button>
-          </>
-        ) : (
-          <button 
-            onClick={handleLogout} 
-            className="btn-primary" 
-            style={{ padding: '8px 16px', background: '#ff0055', border: 'none' }}>
-            SAIR
-          </button>
-        )}
-      </div>
-
-      <div style={{
-        position: 'absolute',
-        top: '20px',
-        left: '20px',
-        zIndex: 1000,
-        background: 'rgba(0,0,0,0.8)',
-        padding: '10px 20px',
-        borderRadius: '8px',
-        color: '#fff',
-        border: '1px solid #aa3bff'
-      }}>
-        <h2 style={{ margin: 0, fontSize: '18px' }}>SPAWNPOINT</h2>
-      </div>
-
-      {/* O Mapa em si */}
-      <MapContainer center={position} zoom={13} style={{ height: '100%', width: '100%' }}>
+      {/* 1. NAVBAR SUPERIOR */}
+      <header className="hud-navbar">
+        <div className="logo-container">
+          <span className="logo-text"><span className="text-orange">SPAWN</span>POINT<br/><span className="logo-sub">FORTALEZA</span></span>
+        </div>
         
-        {/* Usando o mapa gratuito do OpenStreetMap */}
+        <nav className="nav-links">
+          <button>SPAWNPOINT</button>
+          <button className="active">MAPA</button>
+          <button>EVENTOS</button>
+        </nav>
+        
+        <div className="nav-actions">
+           <div className="radar-status">
+              <div className="dot-green"></div> RADAR ATIVO
+           </div>
+           {!logado ? (
+              <button onClick={() => navigate('/login')} className="btn-outline-orange">
+                ENTRAR
+              </button>
+            ) : (
+              <button onClick={handleLogout} className="btn-outline-orange">
+                SAIR
+              </button>
+            )}
+        </div>
+      </header>
+
+      {/* 2. PAINEL DE PESQUISA */}
+      <div className="hud-search-panel">
+        <div className="location-info">
+          <span className="city-tag">FORTALEZA — CEARÁ</span>
+          <h2>DESCUBRA ONDE A COMUNIDADE GEEK ESTÁ.</h2>
+        </div>
+        
+        <div className="search-box-container">
+          <div className="search-input-wrapper">
+             <input type="text" placeholder="Procure por loja, evento, jogo ou bairro..." />
+          </div>
+          <button className="btn-filtros">
+             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6"/></svg> 
+             FILTROS
+          </button>
+        </div>
+      </div>
+
+      {/* 3. BOTÕES INFERIORES */}
+      <div className="hud-bottom-left">
+         <button className="btn-dark radar-btn">
+            <div className="dot-green"></div> RADAR ATIVO
+         </button>
+      </div>
+      
+      <div className="hud-bottom-right">
+        <button className="btn-dark">
+           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></svg>
+           LEGENDA
+        </button>
+        <button className="btn-dark">
+           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+           PERTO DE MIM
+        </button>
+      </div>
+
+      {/* 4. O MAPA */}
+      <MapContainer 
+        center={[-3.7327, -38.5270]} 
+        zoom={13} 
+        className="map-container custom-map-filter" 
+        zoomControl={false} 
+      >
+        {/* TILE LAYER GRATUITO */}
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        <Marker position={position}>
-          <Popup>
-            <b>Centro de Fortaleza</b> <br /> Um potencial SpawnPoint!
+        {/* PIN */}
+        <Marker 
+          position={[-3.7686, -38.4820]} 
+          icon={createSpawnPin('#ff6b00', PIN_ICONS.GAMES)}
+        > 
+          <Popup className="custom-popup">
+            <div className="popup-content">
+              <b>Centro TCG Universitário</b><br />
+              <span>Biblioteca da UNIFOR</span><br/>
+              <i>Mesas de tabuleiro disponíveis.</i>
+            </div>
           </Popup>
         </Marker>
-        
       </MapContainer>
     </div>
   );
