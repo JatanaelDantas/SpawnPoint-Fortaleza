@@ -1,0 +1,135 @@
+.meus-eventos-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.meus-eventos-container h1 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+
+/* ======== ESTILOS DA LISTA ======== */
+.btn-criar {
+  background-color: #f97316;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  width: fit-content;
+  margin-bottom: 32px;
+}
+
+.evento-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.evento-item h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.evento-meta {
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.status-badge {
+  font-size: 14px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-badge.aprovado { color: #22c55e; }
+.status-badge.aprovado .dot { background-color: #22c55e; }
+
+.status-badge.pendente { color: #f97316; }
+.status-badge.pendente .dot { background-color: #f97316; }
+
+.btn-editar-outline {
+  background: transparent;
+  border: 1px solid #444;
+  color: #ccc;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 24px;
+}
+
+.divider-event {
+  width: 100%;
+  border: none;
+  border-top: 1px solid #333;
+}
+
+/* ======== ESTILOS DO FORMULÁRIO ======== */
+.subtitle-local {
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.form-group input {
+  background-color: #0a0a0a;
+  border: 1px solid #333;
+  color: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: #f97316;
+}
+
+.form-actions {
+  display: flex;
+  gap: 16px;
+}
+
+.btn-salvar {
+  background-color: #f97316;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-cancelar {
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid #444;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}

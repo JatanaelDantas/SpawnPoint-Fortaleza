@@ -11,27 +11,34 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+
 @Entity
+
 @Table(name = "tb_eventos")
 public class Evento {
 
+    
     @Id
+    
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    
     @Column(nullable = false)
     private String titulo;
 
+
     @Column(nullable = false)
     private String descricao;
+
 
     @Column(nullable = false)
     private String local;
 
     private LocalDateTime dataHora;
 
-    
     @ManyToOne
+
     @JoinColumn(name = "empresa_id") 
     private Empresa empresa;
 
