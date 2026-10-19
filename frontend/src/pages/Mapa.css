@@ -59,13 +59,23 @@
   letter-spacing: 1px;
 }
 .nav-links button {
-  background: none;
+  background: transparent;
   border: none;
   color: #888;
   cursor: pointer;
+  padding: 10px 20px; 
+  border-radius: 8px; 
+  transition: all 0.2s ease;
 }
+
 .nav-links button.active {
   color: #ff6b00;
+  background-color: rgba(255, 107, 0, 0.08); 
+}
+
+.nav-links button:hover:not(.active) {
+  color: #ddd;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .nav-actions {
@@ -219,3 +229,131 @@
   font-size: 14px;
 }
 .popup-content span { color: #aaa; }
+
+/* =========================================
+   MODAL DE FILTROS (DESIGN PROTÓTIPO)
+   ========================================= */
+.filtros-dropdown-radar {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 12px;
+  background: #0f0f0f;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 20px;
+  width: 450px;
+  z-index: 1000;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  color: white;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.filtros-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #222;
+  padding-bottom: 15px;
+}
+
+.filtros-header h3 {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: #fff;
+  margin: 0;
+}
+
+.btn-fechar {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 16px;
+}
+.btn-fechar:hover { color: #ff6b00; }
+
+.filtros-section {
+  margin-bottom: 20px;
+}
+
+.section-title {
+  display: block;
+  font-size: 10px;
+  color: #888;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.tags-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  background: transparent;
+  border: 1px solid #333;
+  color: #aaa;
+  padding: 8px 14px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.tag:hover {
+  border-color: #555;
+  color: #fff;
+}
+
+.tag.active {
+  background: rgba(255, 107, 0, 0.1);
+  border-color: #ff6b00;
+  color: #ff6b00;
+}
+
+/* Bolinhas de Categoria */
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot-orange { background: #ff6b00; }
+.dot-green { background: #00cc66; }
+.dot-blue { background: #0099ff; }
+.dot-red { background: #ff0055; }
+.dot-yellow { background: #ffcc00; }
+.dot-purple { background: #aa3bff; }
+
+.filtros-footer {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid #222;
+  padding-top: 15px;
+  margin-top: 10px;
+}
+
+.btn-aplicar {
+  background: #ff6b00;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.btn-aplicar:hover { background: #e65c00; }

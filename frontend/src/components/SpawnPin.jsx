@@ -1,7 +1,6 @@
 import L from 'leaflet';
 import './SpawnPin.css';
 
-
 export const createSpawnPin = (color, svgPathD) => {
   return L.divIcon({
     className: 'custom-leaflet-icon',

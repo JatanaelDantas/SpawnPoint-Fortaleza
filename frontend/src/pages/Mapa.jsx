@@ -4,6 +4,56 @@ import { useNavigate } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 import './Mapa.css';
 import { createSpawnPin, PIN_ICONS } from '../components/SpawnPin';
+import PainelPesquisa from '../components/PainelPesquisa';
+import BarraNavegacao from '../components/BarraNavegacao';
+
+
+const MOCK_LOCAIS = [ //PRA TESTAR A LOGICA DE PESQUISA E FILTRO, POSTERIORMENTE VAI SER SUBSTITUIDO POR UMA REQUISIÇÃO AO BACKEND
+  {
+    id: 1,
+    nome: "Centro TCG Universitário",
+    endereco: "Biblioteca da UNIFOR",
+    descricao: "Mesas de tabuleiro disponíveis.",
+    categoria: "TCG",
+    lat: -3.7686, 
+    lng: -38.4820,
+    cor: "#ff6b00", 
+    icone: PIN_ICONS.STORE 
+  },
+  {
+    id: 2,
+    nome: "Bunker Aldeota",
+    endereco: "Rua Tibúrcio Cavalcante, 800 - Aldeota",
+    descricao: "Lan house focada em e-sports e campeonatos.",
+    categoria: "GAMES",
+    lat: -3.7345, 
+    lng: -38.5023,
+    cor: "#0099ff", 
+    icone: PIN_ICONS.GAMES
+  },
+  {
+    id: 3,
+    nome: "Taverna do Dragão",
+    endereco: "Benfica",
+    descricao: "Restaurante temático com boardgames e RPG.",
+    categoria: "FOOD",
+    lat: -3.7412, 
+    lng: -38.5350,
+    cor: "#aa3bff", 
+    icone: PIN_ICONS.FOOD
+  },
+  {
+    id: 4,
+    nome: "Arena Retrô",
+    endereco: "Centro",
+    descricao: "Fliperamas clássicos e jogos arcade.",
+    categoria: "ARCADE",
+    lat: -3.7250, 
+    lng: -38.5270,
+    cor: "#ff0055", 
+    icone: PIN_ICONS.GAMES
+  }
+];
 
 export default function Mapa() {
   const navigate = useNavigate();
@@ -19,100 +69,55 @@ export default function Mapa() {
     localStorage.removeItem('tipoUsuario');
     setLogado(false);
   };
+  const [textoPesquisa, setTextoPesquisa] = useState("");
+
+  const locaisFiltrados = MOCK_LOCAIS.filter((local) => {
+    const nomeLocal = local.nome.toLowerCase();
+    const categoriaLocal = local.categoria.toLowerCase();
+    const enderecoLocal = local.endereco.toLowerCase();
+    const termoBuscado = textoPesquisa.toLowerCase();
+
+    return nomeLocal.includes(termoBuscado) || categoriaLocal.includes(termoBuscado) || enderecoLocal.includes(termoBuscado);
+  });
 
   return (
     <div className="mapa-wrapper">
       
-      {/* 1. NAVBAR SUPERIOR */}
-      <header className="hud-navbar">
-        <div className="logo-container">
-          <span className="logo-text"><span className="text-orange">SPAWN</span>POINT<br/><span className="logo-sub">FORTALEZA</span></span>
-        </div>
-        
-        <nav className="nav-links">
-          <button>SPAWNPOINT</button>
-          <button className="active">MAPA</button>
-          <button>EVENTOS</button>
-        </nav>
-        
-        <div className="nav-actions">
-           <div className="radar-status">
-              <div className="dot-green"></div> RADAR ATIVO
-           </div>
-           {!logado ? (
-              <button onClick={() => navigate('/login')} className="btn-outline-orange">
-                ENTRAR
-              </button>
-            ) : (
-              <button onClick={handleLogout} className="btn-outline-orange">
-                SAIR
-              </button>
-            )}
-        </div>
-      </header>
-
-      {/* 2. PAINEL DE PESQUISA */}
-      <div className="hud-search-panel">
-        <div className="location-info">
-          <span className="city-tag">FORTALEZA — CEARÁ</span>
-          <h2>DESCUBRA ONDE A COMUNIDADE GEEK ESTÁ.</h2>
-        </div>
-        
-        <div className="search-box-container">
-          <div className="search-input-wrapper">
-             <input type="text" placeholder="Procure por loja, evento, jogo ou bairro..." />
-          </div>
-          <button className="btn-filtros">
-             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6"/></svg> 
-             FILTROS
-          </button>
-        </div>
-      </div>
-
-      {/* 3. BOTÕES INFERIORES */}
-      <div className="hud-bottom-left">
-         <button className="btn-dark radar-btn">
-            <div className="dot-green"></div> RADAR ATIVO
-         </button>
-      </div>
+      <BarraNavegacao logado={logado} handleLogout={handleLogout} />
       
-      <div className="hud-bottom-right">
-        <button className="btn-dark">
-           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></svg>
-           LEGENDA
-        </button>
-        <button className="btn-dark">
-           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-           PERTO DE MIM
-        </button>
-      </div>
-
-      {/* 4. O MAPA */}
+      <PainelPesquisa 
+        texto={textoPesquisa} 
+        aoDigitar={setTextoPesquisa} 
+      />
+      
       <MapContainer 
         center={[-3.7327, -38.5270]} 
         zoom={13} 
         className="map-container custom-map-filter" 
         zoomControl={false} 
       >
-        {/* TILE LAYER GRATUITO */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {/* PIN */}
-        <Marker 
-          position={[-3.7686, -38.4820]} 
-          icon={createSpawnPin('#ff6b00', PIN_ICONS.GAMES)}
-        > 
-          <Popup className="custom-popup">
-            <div className="popup-content">
-              <b>Centro TCG Universitário</b><br />
-              <span>Biblioteca da UNIFOR</span><br/>
-              <i>Mesas de tabuleiro disponíveis.</i>
-            </div>
-          </Popup>
-        </Marker>
+        {/* VARREDURA DE PINS MOCKADOS */}
+        {locaisFiltrados.map((local) => (
+          <Marker 
+            key={local.id} 
+            position={[local.lat, local.lng]} 
+            icon={createSpawnPin(local.cor, local.icone)}
+          > 
+            <Popup className="custom-popup">
+              <div className="popup-content">
+                <b>{local.nome}</b><br />
+                <span>{local.endereco}</span><br/>
+                <i>{local.descricao}</i>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
+
       </MapContainer>
     </div>
   );

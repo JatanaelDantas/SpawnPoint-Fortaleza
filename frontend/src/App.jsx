@@ -7,6 +7,8 @@ import AdminLayout from './layouts/AdminLayout';
 import Dashboard from './pages/Admin/Dashboard'; 
 import './App.css';
 import 'leaflet/dist/leaflet.css';
+import Entrada from './pages/Entrada';
+import Eventos from './pages/Eventos';
 
 function App() {
   return (
@@ -19,9 +21,10 @@ function App() {
           <Route index element={<Dashboard />} />
         </Route>
 
-        <Route path="/" element={<Mapa />} />
+
         <Route path="/mapa" element={<Mapa />} />
-        
+        <Route path="/" element={<Entrada />} />
+        <Route path="/eventos" element={<Eventos />} /> 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
