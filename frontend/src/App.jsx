@@ -9,8 +9,8 @@ import Dashboard from './pages/Admin/Dashboard';
 import './App.css';
 import 'leaflet/dist/leaflet.css';
 import Entrada from './pages/Entrada';
-import Eventos from './pages/Eventos';
-import Comunidade from './pages/Comunidade';
+import Eventos from './pages/Usuario/Eventos';
+import Comunidade from './pages/Usuario/ComunidadeUser';
 
 // Importações da Autenticação
 import { AuthProvider } from './context/AuthContext';
@@ -32,7 +32,7 @@ function App() {
           <Route path="/" element={<Entrada />} />
           <Route path="/eventos" element={<Eventos />} /> 
           <Route path="*" element={<Navigate to="/" replace />} />
-          <Route path="/comunidade" element={<Comunidade />} />
+          <Route path="/comunidadeusuario" element={<Comunidade />} />
         </Routes>
         
         

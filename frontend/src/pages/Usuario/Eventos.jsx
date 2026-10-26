@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-import BarraNavegacao from '../components/BarraNavegacao';
+import { useAuth } from '../../context/AuthContext';
+import BarraNavegacao from '../../components/BarraNavegacao';
 import './Eventos.css';
 
 export default function Eventos() {
