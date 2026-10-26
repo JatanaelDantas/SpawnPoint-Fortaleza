@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -10,24 +11,32 @@ import 'leaflet/dist/leaflet.css';
 import Entrada from './pages/Entrada';
 import Eventos from './pages/Eventos';
 
+// Importações da Autenticação
+import { AuthProvider } from './context/AuthContext';
+import { AuthModal } from './components/AuthModal';
+
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/onboarding" element={<Onboarding />} />
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Dashboard />} />
-        </Route>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Dashboard />} />
+          </Route>
 
-
-        <Route path="/mapa" element={<Mapa />} />
-        <Route path="/" element={<Entrada />} />
-        <Route path="/eventos" element={<Eventos />} /> 
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </BrowserRouter>
+          <Route path="/mapa" element={<Mapa />} />
+          <Route path="/" element={<Entrada />} />
+          <Route path="/eventos" element={<Eventos />} /> 
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+        
+        {/* Modal de login fica disponível para a aplicação inteira */}
+        <AuthModal />
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
