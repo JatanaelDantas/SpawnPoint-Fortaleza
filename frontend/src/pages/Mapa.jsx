@@ -1,31 +1,67 @@
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { useNavigate } from 'react-router-dom';
-import L from 'leaflet';
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import 'leaflet/dist/leaflet.css';
+import './Mapa.css';
+import { createSpawnPin, PIN_ICONS } from '../components/SpawnPin';
+import PainelPesquisa from '../components/PainelPesquisa';
+import BarraNavegacao from '../components/BarraNavegacao';
 
-let DefaultIcon = L.icon({
-    iconUrl: icon,
-    shadowUrl: iconShadow,
-    iconSize: [25, 41],
-    iconAnchor: [12, 41]
-});
-L.Marker.prototype.options.icon = DefaultIcon;
+
+const MOCK_LOCAIS = [ //PRA TESTAR A LOGICA DE PESQUISA E FILTRO, POSTERIORMENTE VAI SER SUBSTITUIDO POR UMA REQUISIÇÃO AO BACKEND
+  {
+    id: 1,
+    nome: "Centro TCG Universitário",
+    endereco: "Biblioteca da UNIFOR",
+    descricao: "Mesas de tabuleiro disponíveis.",
+    categoria: "TCG",
+    lat: -3.7686, 
+    lng: -38.4820,
+    cor: "#ff6b00", 
+    icone: PIN_ICONS.STORE 
+  },
+  {
+    id: 2,
+    nome: "Bunker Aldeota",
+    endereco: "Rua Tibúrcio Cavalcante, 800 - Aldeota",
+    descricao: "Lan house focada em e-sports e campeonatos.",
+    categoria: "GAMES",
+    lat: -3.7345, 
+    lng: -38.5023,
+    cor: "#0099ff", 
+    icone: PIN_ICONS.GAMES
+  },
+  {
+    id: 3,
+    nome: "Taverna do Dragão",
+    endereco: "Benfica",
+    descricao: "Restaurante temático com boardgames e RPG.",
+    categoria: "FOOD",
+    lat: -3.7412, 
+    lng: -38.5350,
+    cor: "#aa3bff", 
+    icone: PIN_ICONS.FOOD
+  },
+  {
+    id: 4,
+    nome: "Arena Retrô",
+    endereco: "Centro",
+    descricao: "Fliperamas clássicos e jogos arcade.",
+    categoria: "ARCADE",
+    lat: -3.7250, 
+    lng: -38.5270,
+    cor: "#ff0055", 
+    icone: PIN_ICONS.GAMES
+  }
+];
 
 export default function Mapa() {
   const navigate = useNavigate();
   const [logado, setLogado] = useState(false);
 
-  // Coordenadas centrais de Fortaleza
-  const position = [-3.7327, -38.5270];
-
   useEffect(() => {
-    // Verifica se o usuário tem token para mudar os botões
     const token = localStorage.getItem('token');
-    if (token) {
-      setLogado(true);
-    }
+    if (token) setLogado(true);
   }, []);
 
   const handleLogout = () => {
@@ -33,72 +69,55 @@ export default function Mapa() {
     localStorage.removeItem('tipoUsuario');
     setLogado(false);
   };
+  const [textoPesquisa, setTextoPesquisa] = useState("");
+
+  const locaisFiltrados = MOCK_LOCAIS.filter((local) => {
+    const nomeLocal = local.nome.toLowerCase();
+    const categoriaLocal = local.categoria.toLowerCase();
+    const enderecoLocal = local.endereco.toLowerCase();
+    const termoBuscado = textoPesquisa.toLowerCase();
+
+    return nomeLocal.includes(termoBuscado) || categoriaLocal.includes(termoBuscado) || enderecoLocal.includes(termoBuscado);
+  });
 
   return (
-    <div style={{ position: 'relative', height: '100vh', width: '100vw' }}>
+    <div className="mapa-wrapper">
       
-      <div style={{ 
-        position: 'absolute', 
-        top: '20px', 
-        right: '20px', 
-        zIndex: 1000, 
-        display: 'flex', 
-        gap: '10px' 
-      }}>
-        {!logado ? (
-          <>
-            <button 
-              onClick={() => navigate('/login')} 
-              className="btn-primary" 
-              style={{ padding: '8px 16px', background: 'rgba(0,0,0,0.7)', border: '1px solid #aa3bff' }}>
-              LOGIN
-            </button>
-            <button 
-              onClick={() => navigate('/register')} 
-              className="btn-primary" 
-              style={{ padding: '8px 16px', background: '#aa3bff', border: 'none' }}>
-              CADASTRO
-            </button>
-          </>
-        ) : (
-          <button 
-            onClick={handleLogout} 
-            className="btn-primary" 
-            style={{ padding: '8px 16px', background: '#ff0055', border: 'none' }}>
-            SAIR
-          </button>
-        )}
-      </div>
-
-      <div style={{
-        position: 'absolute',
-        top: '20px',
-        left: '20px',
-        zIndex: 1000,
-        background: 'rgba(0,0,0,0.8)',
-        padding: '10px 20px',
-        borderRadius: '8px',
-        color: '#fff',
-        border: '1px solid #aa3bff'
-      }}>
-        <h2 style={{ margin: 0, fontSize: '18px' }}>SPAWNPOINT</h2>
-      </div>
-
-      {/* O Mapa em si */}
-      <MapContainer center={position} zoom={13} style={{ height: '100%', width: '100%' }}>
-        
-        {/* Usando o mapa gratuito do OpenStreetMap */}
+      <BarraNavegacao logado={logado} handleLogout={handleLogout} />
+      
+      <PainelPesquisa 
+        texto={textoPesquisa} 
+        aoDigitar={setTextoPesquisa} 
+      />
+      
+      <MapContainer 
+        center={[-3.7327, -38.5270]} 
+        zoom={13} 
+        className="map-container custom-map-filter" 
+        zoomControl={false} 
+      >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        <Marker position={position}>
-          <Popup>
-            <b>Centro de Fortaleza</b> <br /> Um potencial SpawnPoint!
-          </Popup>
-        </Marker>
-        
+        {/* VARREDURA DE PINS MOCKADOS */}
+        {locaisFiltrados.map((local) => (
+          <Marker 
+            key={local.id} 
+            position={[local.lat, local.lng]} 
+            icon={createSpawnPin(local.cor, local.icone)}
+          > 
+            <Popup className="custom-popup">
+              <div className="popup-content">
+                <b>{local.nome}</b><br />
+                <span>{local.endereco}</span><br/>
+                <i>{local.descricao}</i>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
+
       </MapContainer>
     </div>
   );

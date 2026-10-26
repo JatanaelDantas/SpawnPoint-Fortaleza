@@ -3,6 +3,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Onboarding from './pages/Onboarding';
 import Mapa from './pages/Mapa';
+import Entrada from './pages/Entrada';
+import Eventos from './pages/Eventos';
 
 import AdminLayout from './layouts/AdminLayout';
 import Dashboard from './pages/Admin/Dashboard';
@@ -28,6 +30,8 @@ function App() {
         {}
         <Route path="/" element={<Mapa />} />
         <Route path="/mapa" element={<Mapa />} />
+        <Route path="/entrada" element={<Entrada />} />
+        <Route path="/eventos" element={<Eventos />} />
 
         {}
         <Route path="/login" element={<Login />} />
@@ -50,7 +54,7 @@ function App() {
           <Route path="configuracoes" element={<Configuracoes />} />
         </Route>
 
-        {}
+        }
         <Route path="/lojista/perfil" element={<PerfilLayout />}>
           <Route index element={<PerfilLojista />} />
         </Route>
