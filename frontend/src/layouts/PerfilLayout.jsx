@@ -4,8 +4,8 @@ import './PerfilLayout.css';
 
 const PerfilLayout = () => {
   return (
-    <div className="perfil-layout-container">
-      <header className="perfil-header">
+    <div className="lojista-container">
+      <header className="lojista-header">
         <div className="logo-container">
           <span className="logo-icon">🎮</span>
           <div className="logo-text">
@@ -25,15 +25,14 @@ const PerfilLayout = () => {
           <div className="radar-status">
             <span className="dot"></span> RADAR ATIVO
           </div>
-          {}
-          <Link to="/perfil" className="user-profile-btn">
-            <div className="avatar-circle">T</div>
-            <span className="user-name-header">TESTE </span>
+          <Link to="/lojista/perfil" className="user-profile-btn" style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
+            <div className="avatar-circle">K</div>
+            <span style={{ color: '#fff', fontSize: '14px', fontWeight: 'bold' }}>KAHYK</span>
           </Link>
         </div>
       </header>
 
-      <main className="perfil-main-content">
+      <main style={{ flex: 1, padding: '3rem 6rem', overflowY: 'auto' }}>
         <Outlet />
       </main>
     </div>

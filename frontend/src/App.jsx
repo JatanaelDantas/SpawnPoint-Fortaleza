@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Onboarding from './pages/Onboarding';
+import Mapa from './pages/Mapa';
+
 import AdminLayout from './layouts/AdminLayout';
 import Dashboard from './pages/Admin/Dashboard';
 
@@ -12,12 +14,22 @@ import MeusEventos from './pages/Empresa/MeusEventos';
 import Comunidade from './pages/Empresa/Comunidade';
 import Estatisticas from './pages/Empresa/Estatisticas';
 import Configuracoes from './pages/Empresa/Configuracoes';
+
+import PerfilLayout from './layouts/PerfilLayout';
+import PerfilLojista from './pages/Empresa/PerfilLojista';
+
 import './App.css';
+import 'leaflet/dist/leaflet.css';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {}
+        <Route path="/" element={<Mapa />} />
+        <Route path="/mapa" element={<Mapa />} />
+
+        {}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/onboarding" element={<Onboarding />} />
@@ -38,15 +50,14 @@ function App() {
           <Route path="configuracoes" element={<Configuracoes />} />
         </Route>
 
-        <Route path="/" element={
-          <div style={{ minHeight: '100vh', background: '#09090d', color: 'white', padding: '50px', boxSizing: 'border-box' }}>
-            Mapa em breve!<br /><a href="/login">Ir para Login</a>
-          </div>
-        } />
+        {}
+        <Route path="/lojista/perfil" element={<PerfilLayout />}>
+          <Route index element={<PerfilLojista />} />
+        </Route>
 
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        {}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      
     </BrowserRouter>
   );
 }

@@ -29,7 +29,7 @@ const LojistaLayout = () => {
             <span className="dot"></span> RADAR ATIVO
           </div>
           <div className="user-avatar">
-            <div className="avatar-circle">K</div>
+            <div className="avatar-circle">KW</div>
             <div className="avatar-circle dark">K</div>
           </div>
         </div>

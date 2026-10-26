@@ -1,11 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import {
-  buscarStatusOnboarding,
-  concluirOnboarding
-} from '../services/api';
-
+import { buscarStatusOnboarding, concluirOnboarding } from '../services/api';
 import './Onboarding.css';
 
 const OPCOES_INTERESSES = [
@@ -26,14 +21,11 @@ export default function Onboarding() {
 
   const [tipoUsuario] = useState(localStorage.getItem('tipoUsuario') || 'USER');
   const totalEtapas = tipoUsuario === 'COMPANY' ? 2 : 3;
-
   const [etapa, setEtapa] = useState(1);
   
-  // Estados para USER
   const [nickname, setNickname] = useState('');
   const [interesses, setInteresses] = useState([]);
   
-  // Estados para COMPANY
   const [nomeFantasia, setNomeFantasia] = useState('');
   const [cnpj, setCnpj] = useState('');
   const [telefone, setTelefone] = useState('');
@@ -53,12 +45,10 @@ export default function Onboarding() {
 
       try {
         const status = await buscarStatusOnboarding();
-        
         if (status.concluido && tipoUsuario === 'USER') {
           navigate('/mapa', { replace: true });
           return;
         }
-        
         if (status.nickname) setNickname(status.nickname);
         if (status.interesses) setInteresses(status.interesses);
       } catch (error) {
@@ -67,7 +57,6 @@ export default function Onboarding() {
         setCarregando(false);
       }
     };
-
     carregarOnboarding();
   }, [navigate, tipoUsuario]);
 
@@ -112,7 +101,6 @@ export default function Onboarding() {
         : { nickname, interesses };
 
       await concluirOnboarding(payload);
-      
       setEtapa(totalEtapas + 1);
     } catch (error) {
       setErro(error.message || 'Não foi possível finalizar o onboarding.');
@@ -131,14 +119,8 @@ export default function Onboarding() {
 
     setStatusLocalizacao('loading');
     navigator.geolocation.getCurrentPosition(
-      () => {
-        setStatusLocalizacao('granted');
-        finalizarOnboarding();
-      },
-      () => {
-        setStatusLocalizacao('denied');
-        finalizarOnboarding();
-      },
+      () => { setStatusLocalizacao('granted'); finalizarOnboarding(); },
+      () => { setStatusLocalizacao('denied'); finalizarOnboarding(); },
       { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
     );
   };
@@ -188,23 +170,13 @@ export default function Onboarding() {
               <div className="onboarding-icon">🎮</div>
               <h1>Bem-vindo ao SpawnPoint!</h1>
               <p className="onboarding-description">Antes de explorar Fortaleza, vamos configurar seu perfil.</p>
-              
               <div className="onboarding-form-group">
                 <label>COMO VOCÊ QUER SER CONHECIDO?</label>
-                <input
-                  type="text"
-                  placeholder="Seu nick"
-                  value={nickname}
-                  maxLength={30}
-                  onChange={(e) => setNickname(e.target.value)}
-                  onKeyDown={(e) => { if (e.key === 'Enter') avancarNickname(); }}
-                />
+                <input type="text" placeholder="Seu nick" value={nickname} maxLength={30} onChange={(e) => setNickname(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') avancarNickname(); }} />
                 <span className="input-help">Esse será seu nome dentro da comunidade.</span>
               </div>
               {erro && <div className="onboarding-error">{erro}</div>}
-              <button className="onboarding-primary-button" onClick={avancarNickname}>
-                CONTINUAR <span>→</span>
-              </button>
+              <button className="onboarding-primary-button" onClick={avancarNickname}>CONTINUAR <span>→</span></button>
             </>
           )}
 
@@ -213,7 +185,6 @@ export default function Onboarding() {
               <div className="onboarding-icon">✨</div>
               <h1>O que você curte?</h1>
               <p className="onboarding-description">Escolha seus interesses para encontrar lugares e eventos que combinam com você.</p>
-              
               <div className="interesses-grid">
                 {OPCOES_INTERESSES.map((opcao) => {
                   const selecionado = interesses.includes(opcao.value);
@@ -226,12 +197,10 @@ export default function Onboarding() {
                   );
                 })}
               </div>
-              
               <div className="selected-counter">
                 {interesses.length === 0 ? 'Nenhum interesse selecionado' : `${interesses.length} interesse${interesses.length > 1 ? 's' : ''} selecionado${interesses.length > 1 ? 's' : ''}`}
               </div>
               {erro && <div className="onboarding-error">{erro}</div>}
-              
               <div className="onboarding-actions">
                 <button className="onboarding-secondary-button" onClick={() => { setErro(''); setEtapa(1); }}>← VOLTAR</button>
                 <button className="onboarding-primary-button" onClick={avancarInteresses}>CONTINUAR <span>→</span></button>
@@ -244,26 +213,20 @@ export default function Onboarding() {
               <div className="onboarding-icon">🏢</div>
               <h1>Configure seu Negócio</h1>
               <p className="onboarding-description">Preencha os dados do seu estabelecimento para atrair a comunidade geek.</p>
-              
               <div className="onboarding-form-group">
                 <label>NOME FANTASIA</label>
                 <input type="text" placeholder="Nome do seu negócio" value={nomeFantasia} onChange={(e) => setNomeFantasia(e.target.value)} />
               </div>
-
               <div className="onboarding-form-group">
                 <label>CNPJ</label>
                 <input type="text" placeholder="00.000.000/0000-00" value={cnpj} onChange={(e) => setCnpj(e.target.value)} />
               </div>
-
               <div className="onboarding-form-group">
                 <label>TELEFONE</label>
                 <input type="text" placeholder="(85) 90000-0000" value={telefone} onChange={(e) => setTelefone(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') avancarEmpresa(); }} />
               </div>
-              
               {erro && <div className="onboarding-error">{erro}</div>}
-              <button className="onboarding-primary-button" onClick={avancarEmpresa} style={{ marginTop: '24px' }}>
-                CONTINUAR <span>→</span>
-              </button>
+              <button className="onboarding-primary-button" onClick={avancarEmpresa} style={{ marginTop: '24px' }}>CONTINUAR <span>→</span></button>
             </>
           )}
 
@@ -271,20 +234,14 @@ export default function Onboarding() {
             <>
               <div className="location-circle">📍</div>
               <h1>Encontre SpawnPoints perto de você</h1>
-              <p className="onboarding-description location-description">
-                Use sua localização para descobrir eventos e estabelecimentos geek próximos de você.
-              </p>
-              
+              <p className="onboarding-description location-description">Use sua localização para descobrir eventos e estabelecimentos geek próximos de você.</p>
               <div className="location-info">
                 <p>Sua localização será utilizada para encontrar pontos próximos e não será salva no seu perfil.</p>
               </div>
-              
               {erro && <div className="onboarding-error">{erro}</div>}
-              
               <button className="onboarding-primary-button location-button" disabled={salvando || statusLocalizacao === 'loading'} onClick={solicitarLocalizacao}>
                 {statusLocalizacao === 'loading' ? 'SOLICITANDO LOCALIZAÇÃO...' : salvando ? 'FINALIZANDO...' : 'USAR MINHA LOCALIZAÇÃO'}
               </button>
-              
               <button className="skip-location-button" disabled={salvando} onClick={finalizarOnboarding}>Agora não</button>
               <button className="back-link-button" disabled={salvando} onClick={() => { setErro(''); setEtapa(tipoUsuario === 'USER' ? 2 : 1); }}>← Voltar</button>
             </>
@@ -295,13 +252,8 @@ export default function Onboarding() {
               <div className="finished-icon">✓</div>
               <span className="finished-small-text">CHECKPOINT ALCANÇADO</span>
               <h1>Seu SpawnPoint está pronto!</h1>
-              <p className="onboarding-description">
-                Agora é hora de explorar a comunidade geek de Fortaleza.
-              </p>
-              
-              <button className="onboarding-primary-button" onClick={() => navigate('/mapa', { replace: true })}>
-                EXPLORAR FORTALEZA
-              </button>
+              <p className="onboarding-description">Agora é hora de explorar a comunidade geek de Fortaleza.</p>
+              <button className="onboarding-primary-button" onClick={() => navigate('/mapa', { replace: true })}>EXPLORAR FORTALEZA</button>
             </div>
           )}
 

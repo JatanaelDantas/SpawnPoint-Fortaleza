@@ -21,17 +21,12 @@ export default function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-   
     if (formData.senha !== formData.confirmarSenha) {
-      setToast({
-        msg: 'As senhas não coincidem!',
-        type: 'error'
-      });
+      setToast({ msg: 'As senhas não coincidem!', type: 'error' });
       return;
     }
 
     try {
-      
       const { confirmarSenha, ...dadosParaEnvio } = formData;
       
       const data = await register({
@@ -40,25 +35,16 @@ export default function Register() {
       });
 
       localStorage.setItem('token', data.token);
-      
-      //ADC pra onboarding saber quem é 
       localStorage.setItem('tipoUsuario', tipo);
 
-      setToast({
-        msg: 'Cadastro realizado com sucesso!',
-        type: 'success'
-      });
+      setToast({ msg: 'Cadastro realizado com sucesso!', type: 'success' });
 
       setTimeout(() => {
-        //modifiquei aqui pra tanto empresa e usuario ir pra onboarding
         navigate('/onboarding');
       }, 800);
 
     } catch (err) {
-      setToast({
-        msg: err.message,
-        type: 'error'
-      });
+      setToast({ msg: err.message, type: 'error' });
     }
   };
 
@@ -78,7 +64,6 @@ export default function Register() {
         </div>
 
         <form onSubmit={handleRegister}>
-          
           {tipo === 'COMPANY' ? (
             <>
               <div className="input-group">
