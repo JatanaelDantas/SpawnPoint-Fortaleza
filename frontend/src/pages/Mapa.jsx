@@ -71,7 +71,7 @@ export default function Mapa() {
     });
   };
 
-  // Ação de avaliar protegida
+  
   const handleAvaliar = (local) => {
     requireAuth(() => {
       console.log(`Abrindo formulário de avaliação para ${local.nome}`);
@@ -94,7 +94,7 @@ export default function Mapa() {
   return (
     <div className="mapa-wrapper">
       
-      {/* Barra de Navegação usando o estado de autenticação global */}
+     
       <BarraNavegacao logado={isAuthenticated} handleLogout={logout} />
       
       <PainelPesquisa 
@@ -113,7 +113,7 @@ export default function Mapa() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {/* VARREDURA DE PINS MOCKADOS */}
+        
         {locaisFiltrados.map((local) => (
           <Marker 
             key={local.id} 
@@ -126,7 +126,7 @@ export default function Mapa() {
                 <span>{local.endereco}</span><br/>
                 <i>{local.descricao}</i>
 
-                {/* Botões de Ação Protegidos */}
+                
                 <div style={popupStyles.actions}>
                   <button 
                     onClick={() => handleFavoritar(local)} 

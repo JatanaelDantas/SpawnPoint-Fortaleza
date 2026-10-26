@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState } from 'react';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // Altere para dados reais quando integrar com backend
+  const [user, setUser] = useState(null); 
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   // Verifica se está autenticado
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
   const openAuthModal = () => setIsAuthModalOpen(true);
   const closeAuthModal = () => setIsAuthModalOpen(false);
 
-  // Executa uma ação apenas se estiver logado; caso contrário, abre o modal
+  // Executa uma ação apenas se estiver logado;
   const requireAuth = (actionCallback) => {
     if (isAuthenticated) {
       actionCallback();

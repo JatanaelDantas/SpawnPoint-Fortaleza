@@ -1,0 +1,128 @@
+.page-container {
+  padding: 2rem 4rem;
+  background-color: #121214;
+  min-height: 100vh;
+  color: #ffffff;
+}
+
+.page-header {
+  margin-bottom: 3rem;
+}
+
+.subtitle {
+  color: #ff6b00;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 0.5rem 0;
+  text-transform: uppercase;
+}
+
+.description {
+  color: #a0a0a0;
+  font-size: 1rem;
+}
+
+.empty-state {
+  color: #666;
+  font-style: italic;
+}
+
+.eventos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 1.5rem;
+}
+
+.evento-card {
+  background-color: #1e1e24;
+  border: 1px solid #2a2a30;
+  border-left: 4px solid #ff6b00; /* Sobrescrito via style inline */
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.evento-categoria {
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.evento-titulo {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.evento-subtitulo {
+  font-size: 0.9rem;
+  color: #ff6b00;
+  margin: 0.2rem 0 1rem 0;
+  text-transform: uppercase;
+}
+
+.evento-detalhes {
+  display: flex;
+  gap: 1rem;
+  color: #888;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.evento-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #2a2a30;
+  padding-top: 1rem;
+}
+
+.evento-preco {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.evento-acoes {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-interesse {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #444;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-interesse:hover {
+  background: #2a2a30;
+}
+
+.btn-participar {
+  background: #ff6b00;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-participar:hover {
+  background: #e65c00;
+}
