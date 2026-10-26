@@ -1,0 +1,142 @@
+.lojista-container {
+  min-height: 100vh;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.lojista-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  height: 70px;
+  background-color: #141414;
+  border-bottom: 1px solid #333;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.logo-text strong { color: #fff; letter-spacing: 1px; }
+.logo-text span { color: #f97316; font-weight: bold; }
+
+.top-nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.top-nav a {
+  color: #888;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.top-nav a.active {
+  color: #f97316;
+  background-color: rgba(249, 115, 22, 0.1);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.radar-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #2a2a2a;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.dot {
+  width: 8px; height: 8px;
+  background-color: #22c55e;
+  border-radius: 50%;
+}
+
+.user-avatar { display: flex; }
+.avatar-circle {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background-color: #f97316;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: bold; font-size: 14px;
+}
+.avatar-circle.dark { background-color: #333; margin-left: -10px; border: 2px solid #141414; }
+
+.lojista-body {
+  display: flex;
+  flex: 1;
+}
+
+.lojista-sidebar {
+  width: 250px;
+  background-color: #141414;
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-title {
+  color: #f97316;
+  font-size: 12px;
+  margin-bottom: 1rem;
+  padding: 0 2rem;
+}
+
+.side-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.side-nav a {
+  color: #ccc;
+  text-decoration: none;
+  padding: 12px 2rem;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.side-nav a.active {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-left: 3px solid #f97316;
+  color: #fff;
+  font-weight: bold;
+}
+
+.btn-map {
+  margin: 2rem;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid #444;
+  color: #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.lojista-content {
+  flex: 1;
+  padding: 2rem 4rem;
+  overflow-y: auto;
+}

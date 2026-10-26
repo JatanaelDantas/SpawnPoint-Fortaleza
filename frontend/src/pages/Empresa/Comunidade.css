@@ -1,0 +1,26 @@
+.comunidade-container h1 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 32px;
+}
+
+.comunidade-header h2 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.comunidade-header p {
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 40px;
+}
+
+.comunidade-item {
+  border-bottom: 1px solid #333;
+  padding: 16px 0;
+}
+
+.comunidade-item p {
+  font-size: 16px;
+  color: #ccc;
+}
