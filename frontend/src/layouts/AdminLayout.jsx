@@ -13,7 +13,7 @@ export default function AdminLayout() {
 
   return (
     <div className="admin-container">
-      {/* Barra Lateral (Sidebar) */}
+      
       <aside className="admin-sidebar">
         <div className="sidebar-logo">
           <strong>SPAWNPOINT</strong>
@@ -31,7 +31,7 @@ export default function AdminLayout() {
         </button>
       </aside>
 
-      {/* Área Principal onde o conteúdo vai mudar */}
+      
       <main className="admin-content">
         <Outlet /> 
       </main>
