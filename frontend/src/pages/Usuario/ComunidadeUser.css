@@ -1,0 +1,112 @@
+.page-container {
+  padding: 2rem 4rem;
+  background-color: #121214;
+  min-height: 100vh;
+  color: #ffffff;
+}
+
+.page-header {
+  margin-bottom: 3rem;
+}
+
+.subtitle {
+  color: #ff6b00;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 0.5rem 0;
+  text-transform: uppercase;
+}
+
+.description {
+  color: #a0a0a0;
+  font-size: 1rem;
+}
+
+.empty-state {
+  color: #666;
+  font-style: italic;
+}
+
+.ranking-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.ranking-item {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #2a2a30;
+}
+
+.rank-position {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #a0a0a0;
+  width: 50px;
+}
+
+.local-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.local-nome {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.local-bairro {
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.local-categoria-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background-color: #1a1a1f;
+  margin-right: 2rem;
+}
+
+.local-categoria-badge .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.local-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 80px;
+}
+
+.checkin-count {
+  color: #ff6b00;
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.checkin-label {
+  font-size: 0.7rem;
+  color: #888;
+  font-weight: 600;
+  margin-top: 0.2rem;
+}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { useNavigate } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
@@ -6,9 +6,10 @@ import './Mapa.css';
 import { createSpawnPin, PIN_ICONS } from '../components/SpawnPin';
 import PainelPesquisa from '../components/PainelPesquisa';
 import BarraNavegacao from '../components/BarraNavegacao';
+// Importação do Hook de Autenticação
+import { useAuth } from '../context/AuthContext';
 
-
-const MOCK_LOCAIS = [ //PRA TESTAR A LOGICA DE PESQUISA E FILTRO, POSTERIORMENTE VAI SER SUBSTITUIDO POR UMA REQUISIÇÃO AO BACKEND
+const MOCK_LOCAIS = [
   {
     id: 1,
     nome: "Centro TCG Universitário",
@@ -57,19 +58,25 @@ const MOCK_LOCAIS = [ //PRA TESTAR A LOGICA DE PESQUISA E FILTRO, POSTERIORMENTE
 
 export default function Mapa() {
   const navigate = useNavigate();
-  const [logado, setLogado] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) setLogado(true);
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('tipoUsuario');
-    setLogado(false);
-  };
   const [textoPesquisa, setTextoPesquisa] = useState("");
+
+  // Pega o estado global e a trava de autorização
+  const { isAuthenticated, logout, requireAuth } = useAuth();
+
+  // Ação de favoritar protegida
+  const handleFavoritar = (local) => {
+    requireAuth(() => {
+      console.log(`Ponto ${local.nome} adicionado aos favoritos!`);
+      // Aqui entrará a requisição para salvar no banco futuramente
+    });
+  };
+
+  
+  const handleAvaliar = (local) => {
+    requireAuth(() => {
+      console.log(`Abrindo formulário de avaliação para ${local.nome}`);
+    });
+  };
 
   const locaisFiltrados = MOCK_LOCAIS.filter((local) => {
     const nomeLocal = local.nome.toLowerCase();
@@ -77,13 +84,18 @@ export default function Mapa() {
     const enderecoLocal = local.endereco.toLowerCase();
     const termoBuscado = textoPesquisa.toLowerCase();
 
-    return nomeLocal.includes(termoBuscado) || categoriaLocal.includes(termoBuscado) || enderecoLocal.includes(termoBuscado);
+    return (
+      nomeLocal.includes(termoBuscado) || 
+      categoriaLocal.includes(termoBuscado) || 
+      enderecoLocal.includes(termoBuscado)
+    );
   });
 
   return (
     <div className="mapa-wrapper">
       
-      <BarraNavegacao logado={logado} handleLogout={handleLogout} />
+     
+      <BarraNavegacao logado={isAuthenticated} handleLogout={logout} />
       
       <PainelPesquisa 
         texto={textoPesquisa} 
@@ -101,7 +113,7 @@ export default function Mapa() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {/* VARREDURA DE PINS MOCKADOS */}
+        
         {locaisFiltrados.map((local) => (
           <Marker 
             key={local.id} 
@@ -113,6 +125,22 @@ export default function Mapa() {
                 <b>{local.nome}</b><br />
                 <span>{local.endereco}</span><br/>
                 <i>{local.descricao}</i>
+
+                
+                <div style={popupStyles.actions}>
+                  <button 
+                    onClick={() => handleFavoritar(local)} 
+                    style={popupStyles.btnFavoritar}
+                  >
+                    ❤️ Favoritar
+                  </button>
+                  <button 
+                    onClick={() => handleAvaliar(local)} 
+                    style={popupStyles.btnAvaliar}
+                  >
+                    ⭐ Avaliar
+                  </button>
+                </div>
               </div>
             </Popup>
           </Marker>
@@ -122,3 +150,32 @@ export default function Mapa() {
     </div>
   );
 }
+
+
+const popupStyles = {
+  actions: {
+    display: 'flex',
+    gap: '0.5rem',
+    marginTop: '0.8rem',
+  },
+  btnFavoritar: {
+    backgroundColor: '#6C5CE7',
+    color: '#FFF',
+    border: 'none',
+    borderRadius: '4px',
+    padding: '0.4rem 0.6rem',
+    cursor: 'pointer',
+    fontSize: '0.75rem',
+    fontWeight: 'bold',
+  },
+  btnAvaliar: {
+    backgroundColor: '#2D3436',
+    color: '#FFF',
+    border: 'none',
+    borderRadius: '4px',
+    padding: '0.4rem 0.6rem',
+    cursor: 'pointer',
+    fontSize: '0.75rem',
+    fontWeight: 'bold',
+  },
+};
