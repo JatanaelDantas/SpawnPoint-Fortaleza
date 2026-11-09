@@ -1,7 +1,8 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import BarraNavegacao from '../components/BarraNavegacao';
-import '../pages/Mapa.css';
+import { useNavigate } from "react-router-dom";
+import BarraNavegacao from "../../components/BarraNavegacao";
+import "../Mapa.css";
+
 
 export default function Entrada() {
   const navigate = useNavigate();

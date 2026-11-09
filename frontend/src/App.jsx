@@ -1,6 +1,8 @@
+
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
+// Páginas do usuário
 import Entrada from './pages/Usuario/Entrada';
 import Mapa from './pages/Mapa';
 import Eventos from './pages/Usuario/Eventos';
@@ -9,11 +11,11 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Onboarding from './pages/Onboarding';
 
-
+// Área administrativa
 import AdminLayout from './layouts/AdminLayout';
 import Dashboard from './pages/Admin/Dashboard';
 
-
+// Área do lojista
 import LojistaLayout from './layouts/LojistaLayout';
 import VisaoGeral from './pages/Empresa/VisaoGeral';
 import MeuEstabelecimento from './pages/Empresa/MeuEstabelecimento';
@@ -22,14 +24,15 @@ import ComunidadeLojista from './pages/Empresa/Comunidade';
 import Estatisticas from './pages/Empresa/Estatisticas';
 import Configuracoes from './pages/Empresa/Configuracoes';
 
+// Perfil do lojista
 import PerfilLayout from './layouts/PerfilLayout';
 import PerfilLojista from './pages/Empresa/PerfilLojista';
 
-
+// Autenticação
 import { AuthProvider } from './context/AuthContext';
 import { AuthModal } from './components/AuthModal';
 
-
+// Estilos
 import './App.css';
 import 'leaflet/dist/leaflet.css';
 
@@ -38,24 +41,24 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          {}
+          {/* Rotas do usuário */}
           <Route path="/" element={<Entrada />} />
           <Route path="/mapa" element={<Mapa />} />
           <Route path="/eventos" element={<Eventos />} />
-          {}
           <Route path="/comunidade" element={<ComunidadeUser />} />
           <Route path="/comunidadeusuario" element={<ComunidadeUser />} />
-          
+
+          {/* Autenticação */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/onboarding" element={<Onboarding />} />
 
-          {}
+          {/* Área administrativa */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
           </Route>
 
-          {}
+          {/* Área do lojista */}
           <Route path="/lojista" element={<LojistaLayout />}>
             <Route index element={<VisaoGeral />} />
             <Route path="visao-geral" element={<VisaoGeral />} />
@@ -66,15 +69,16 @@ function App() {
             <Route path="configuracoes" element={<Configuracoes />} />
           </Route>
 
+          {/* Perfil do lojista */}
           <Route path="/lojista/perfil" element={<PerfilLayout />}>
             <Route index element={<PerfilLojista />} />
           </Route>
 
-          {}
+          {/* Rota não encontrada */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
 
-        {}
+        {/* Modal de autenticação */}
         <AuthModal />
       </BrowserRouter>
     </AuthProvider>

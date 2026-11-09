@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import BarraNavegacao from '../../components/BarraNavegacao';
-import './Comunidade.css';
+import './ComunidadeUser.css';
 
 export default function Comunidade() {
   const [ranking, setRanking] = useState([]);
