@@ -1,0 +1,300 @@
+
+.sp-login-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 30%, rgba(255, 122, 0, .10), transparent 35%),
+    radial-gradient(circle at 85% 80%, rgba(124, 58, 237, .10), transparent 35%),
+    #101014;
+  color: #f8f7fa;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.sp-login-page * {
+  box-sizing: border-box;
+}
+
+.sp-login-header {
+  min-height: 82px;
+  padding: 16px 6%;
+  border-bottom: 1px solid #29262f;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.sp-login-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+
+.sp-login-symbol {
+  width: 43px;
+  height: 43px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: #ff7a00;
+  color: #111;
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.sp-login-logo strong {
+  display: block;
+  font-size: 17px;
+}
+
+.sp-login-logo small {
+  display: block;
+  color: #ff8a21;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+.sp-login-return {
+  color: #c5bfca;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.sp-login-return:hover {
+  color: #ff8a21;
+}
+
+.sp-login-main {
+  max-width: 1200px;
+  min-height: calc(100vh - 82px);
+  margin: auto;
+  padding: 60px 28px;
+  display: grid;
+  grid-template-columns: 1fr 440px;
+  gap: 70px;
+  align-items: center;
+}
+
+.sp-login-tag {
+  display: inline-block;
+  color: #ff8a21;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.sp-login-intro h1 {
+  max-width: 620px;
+  font-size: clamp(38px, 5vw, 65px);
+  line-height: 1.12;
+  letter-spacing: -2px;
+  margin: 22px 0;
+}
+
+.sp-login-intro h1 span {
+  color: #ff7a00;
+}
+
+.sp-login-intro p {
+  max-width: 480px;
+  color: #aaa3b1;
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.sp-login-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 35px;
+}
+
+.sp-login-features span {
+  padding: 10px 14px;
+  border: 1px solid #39313c;
+  border-radius: 30px;
+  background: #1c1921;
+  color: #e9e3ed;
+  font-size: 13px;
+}
+
+.sp-login-card {
+  padding: 38px;
+  border: 1px solid #38313e;
+  border-radius: 18px;
+  background: #1c1921;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, .30);
+}
+
+.sp-login-card-header h2 {
+  margin: 12px 0 8px;
+  font-size: 27px;
+}
+
+.sp-login-card-header p {
+  margin: 0;
+  color: #a9a1ae;
+  font-size: 14px;
+}
+
+.sp-login-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 5px;
+  margin: 28px 0;
+  background: #111015;
+  border-radius: 10px;
+}
+
+.sp-login-tabs a {
+  padding: 12px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 7px;
+  color: #aaa3b1;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.sp-login-tabs a.active {
+  color: #161014;
+  background: #ff7a00;
+}
+
+.sp-login-field {
+  margin-bottom: 20px;
+}
+
+.sp-login-field label {
+  display: block;
+  margin-bottom: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #e9e4ed;
+}
+
+.sp-login-field input {
+  width: 100%;
+  min-height: 48px;
+  padding: 13px 14px;
+  border: 1px solid #403a47;
+  border-radius: 9px;
+  outline: none;
+  background: #121116;
+  color: #fff;
+  font-size: 14px;
+}
+
+.sp-login-field input:focus {
+  border-color: #ff7a00;
+  box-shadow: 0 0 0 3px rgba(255, 122, 0, .12);
+}
+
+.sp-login-field input::placeholder {
+  color: #77717d;
+}
+
+.sp-login-password {
+  position: relative;
+}
+
+.sp-login-password input {
+  padding-right: 85px;
+}
+
+.sp-login-password button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  background: none;
+  color: #ff8a21;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.sp-login-submit {
+  width: 100%;
+  padding: 15px;
+  margin-top: 6px;
+  border: 0;
+  border-radius: 9px;
+  background: #ff7a00;
+  color: #171014;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.sp-login-submit:hover {
+  background: #ff963d;
+}
+
+.sp-login-submit:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.sp-login-footer {
+  margin: 26px 0 0;
+  text-align: center;
+  color: #aaa3b1;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.sp-login-footer a {
+  color: #ff8a21;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 850px) {
+  .sp-login-main {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+    gap: 30px;
+    padding: 40px 20px;
+  }
+
+  .sp-login-intro {
+    text-align: center;
+  }
+
+  .sp-login-intro h1,
+  .sp-login-intro p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .sp-login-features {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .sp-login-header {
+    padding: 14px 18px;
+  }
+
+  .sp-login-logo strong {
+    font-size: 13px;
+  }
+
+  .sp-login-return {
+    font-size: 12px;
+  }
+
+  .sp-login-intro h1 {
+    font-size: 35px;
+  }
+
+  .sp-login-card {
+    padding: 25px 20px;
+  }
+}
